@@ -1,6 +1,6 @@
 export class Transfer {
   constructor(
-    public id: string,
+    public id: number,
     public importe: number,
     public empresaCuit: string,
     public cuentaDebito: string,
