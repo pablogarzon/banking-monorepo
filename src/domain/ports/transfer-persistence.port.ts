@@ -1,8 +1,8 @@
 import { Transfer } from '../entities/transfer';
 
-export const TRANSFER_REPOSITORY = Symbol('TRANSFER_REPOSITORY');
+export const TRANSFER_PERSISTENCE_PORT = Symbol('TRANSFER_PERSISTENCE_PORT');
 
-export interface TransferRepository {
+export interface TransferPersistencePort {
   save(transfer: Transfer): Promise<void>;
   findTransfersSince(date: Date): Promise<Transfer[]>;
   findAll(): Promise<Transfer[]>;

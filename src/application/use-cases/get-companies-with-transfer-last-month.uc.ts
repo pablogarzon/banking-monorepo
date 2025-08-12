@@ -1,27 +1,27 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Company } from 'src/domain/entities/company';
 import {
-  COMPANY_REPOSITORY,
-  type CompanyRepository,
-} from 'src/domain/ports/company.repository';
+  COMPANY_PERSISTENCE_PORT,
+  type CompanyPersistencePort,
+} from 'src/domain/ports/company-persistence.port';
 import {
-  TRANSFER_REPOSITORY,
-  type TransferRepository,
-} from 'src/domain/ports/transfer.repository';
+  TRANSFER_PERSISTENCE_PORT,
+  type TransferPersistencePort,
+} from 'src/domain/ports/transfer-persistence.port';
 
 @Injectable()
 export class GetCompaniesWithTransferLastMonthUC {
   constructor(
-    @Inject(COMPANY_REPOSITORY)
-    private readonly companyRepository: CompanyRepository,
-    @Inject(TRANSFER_REPOSITORY)
-    private readonly transferRepository: TransferRepository,
+    @Inject(COMPANY_PERSISTENCE_PORT)
+    private readonly companyRepository: CompanyPersistencePort,
+    @Inject(TRANSFER_PERSISTENCE_PORT)
+    private readonly transferRepository: TransferPersistencePort,
   ) {}
 
   async execute() {
     const dateSince = new Date();
     dateSince.setMonth(dateSince.getMonth() - 1);
-    
+
     const transfers =
       await this.transferRepository.findTransfersSince(dateSince);
     const cuits = Array.from(new Set(transfers.map((t) => t.empresaCuit)));
@@ -31,5 +31,3 @@ export class GetCompaniesWithTransferLastMonthUC {
     return companies.filter((c): c is Company => c !== null);
   }
 }
-
-
