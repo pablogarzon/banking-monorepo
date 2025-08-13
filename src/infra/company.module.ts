@@ -5,12 +5,12 @@ import { GetCompaniesWithTransferLastMonthUC } from 'src/application/use-cases/g
 import { RegisterNewCompanyUC } from 'src/application/use-cases/register-new-company.uc';
 import { COMPANY_PERSISTENCE_PORT } from 'src/domain/ports/company-persistence.port';
 import { TRANSFER_PERSISTENCE_PORT } from 'src/domain/ports/transfer-persistence.port';
-import { SqliteProviderModule } from './db/providers/sqlite.provider';
 import { CompanyPersistenceAdapter } from './db/adapters/company-persistence.adapter';
 import { TransferPersitenceAdapter } from './db/adapters/transfer-persistence.adapter';
+import { DatabaseProviderModule } from './db/providers/database.provider';
 
 @Module({
-  imports: [SqliteProviderModule],
+  imports: [DatabaseProviderModule],
   controllers: [CompanyController],
   providers: [
     GetCompaniesSuscribedLastMonthUC,
