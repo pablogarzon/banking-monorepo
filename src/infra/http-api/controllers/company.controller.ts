@@ -5,6 +5,7 @@ import { GetCompaniesSuscribedLastMonthUC } from 'src/application/use-cases/get-
 import { RegisterNewCompanyUC } from 'src/application/use-cases/register-new-company.uc';
 import { CreateCompanyCommand } from 'src/application/commands/create-company.command';
 import { CompanyDto } from '../dtos/company.dto';
+import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller('company')
 export class CompanyController {
@@ -15,19 +16,31 @@ export class CompanyController {
   ) {}
 
   @Get('transferencias/ultimo-mes')
+  @ApiOperation({
+    summary:
+      'Obtener las empresas que realizaron transferencias en el último mes',
+  })
+  @ApiOkResponse({ type: CompanyDto, isArray: true })
   async companiesWithTransfersLastMonth(): Promise<CompanyDto[]> {
     const companiesModel =
       await this.getCompaniesWithTransferLastMonth.execute();
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }
 
-  @Get('adhesiones/ultimo-mes')
+  @Get('adhesiones-ultimo-mes')
+  @ApiOperation({
+    summary: 'Obtener las empresas que se adhirieron en el último mes',
+  })
+  @ApiOkResponse({ type: CompanyDto, isArray: true })
   async companiesAdheredLastMonth(): Promise<CompanyDto[]> {
     const companiesModel = await this.getCompaniesSuscribedLastMonth.execute();
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }
 
-  @Post('empresas/adhesiones')
+  @Post()
+  @ApiOperation({
+    summary: 'Registrar la adhesión de una nueva empresa',
+  })
   register(@Body() dto: CreateCompanyDto) {
     const command: CreateCompanyCommand = {
       ...dto,
