@@ -8,7 +8,7 @@ export class CompanyEntity {
   @Column()
   razonSocial!: string;
 
-  @Column({ type: 'datetime' })
+  @Column()
   fechaAdhesion!: Date;
 
   @Column({ nullable: true })

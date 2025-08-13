@@ -17,6 +17,6 @@ export class TransferEntity {
   @Column()
   cuentaCredito!: string;
 
-  @Column({ type: 'datetime' })
+  @Column()
   fecha!: Date;
 }
