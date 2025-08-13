@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CompanyController } from './http-api/controllers/company.controller';
-import { GetCompaniesSuscribedLastMonthUC } from 'src/application/use-cases/get-companies-subscribed-last-month.uc';
-import { GetCompaniesWithTransferLastMonthUC } from 'src/application/use-cases/get-companies-with-transfer-last-month.uc';
+import { GetCompaniesSuscribedSinceUC } from 'src/application/use-cases/get-companies-subscribed-since.uc';
+import { GetCompaniesWithTransferSinceUC } from 'src/application/use-cases/get-companies-with-transfer-since.uc';
 import { RegisterNewCompanyUC } from 'src/application/use-cases/register-new-company.uc';
 import { COMPANY_PERSISTENCE_PORT } from 'src/domain/ports/company-persistence.port';
 import { TRANSFER_PERSISTENCE_PORT } from 'src/domain/ports/transfer-persistence.port';
@@ -13,8 +13,8 @@ import { DatabaseProviderModule } from './db/providers/database.provider';
   imports: [DatabaseProviderModule],
   controllers: [CompanyController],
   providers: [
-    GetCompaniesSuscribedLastMonthUC,
-    GetCompaniesWithTransferLastMonthUC,
+    GetCompaniesSuscribedSinceUC,
+    GetCompaniesWithTransferSinceUC,
     RegisterNewCompanyUC,
     {
       provide: COMPANY_PERSISTENCE_PORT,

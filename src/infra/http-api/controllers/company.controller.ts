@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
-import { GetCompaniesWithTransferLastMonthUC } from 'src/application/use-cases/get-companies-with-transfer-last-month.uc';
-import { GetCompaniesSuscribedLastMonthUC } from 'src/application/use-cases/get-companies-subscribed-last-month.uc';
+import { GetCompaniesWithTransferSinceUC } from 'src/application/use-cases/get-companies-with-transfer-since.uc';
+import { GetCompaniesSuscribedSinceUC } from 'src/application/use-cases/get-companies-subscribed-since.uc';
 import { RegisterNewCompanyUC } from 'src/application/use-cases/register-new-company.uc';
 import { CreateCompanyCommand } from 'src/application/commands/create-company.command';
 import { CompanyDto } from '../dtos/company.dto';
@@ -10,30 +10,39 @@ import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 @Controller('company')
 export class CompanyController {
   constructor(
-    private readonly getCompaniesWithTransferLastMonth: GetCompaniesWithTransferLastMonthUC,
-    private readonly getCompaniesSuscribedLastMonth: GetCompaniesSuscribedLastMonthUC,
+    private readonly getCompaniesWithTransferSince: GetCompaniesWithTransferSinceUC,
+    private readonly getCompaniesSuscribedSince: GetCompaniesSuscribedSinceUC,
     private readonly registerNewCompany: RegisterNewCompanyUC,
   ) {}
 
-  @Get('transferencias/ultimo-mes')
+  @Get('transferencias')
   @ApiOperation({
     summary:
-      'Obtener las empresas que realizaron transferencias en el último mes',
+      'Obtener las empresas que realizaron transferencias desde una fecha dada',
   })
   @ApiOkResponse({ type: CompanyDto, isArray: true })
-  async companiesWithTransfersLastMonth(): Promise<CompanyDto[]> {
-    const companiesModel =
-      await this.getCompaniesWithTransferLastMonth.execute();
+  async companiesWithTransfersSince(
+    @Query('since') since: Date,
+  ): Promise<CompanyDto[]> {
+    const companiesModel = await this.getCompaniesWithTransferSince.execute(
+      new Date(since),
+    );
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }
 
-  @Get('adhesiones-ultimo-mes')
+  @Get()
   @ApiOperation({
-    summary: 'Obtener las empresas que se adhirieron en el último mes',
+    summary: 'Obtener las empresas que se adhirieron desde una fecha dada',
   })
   @ApiOkResponse({ type: CompanyDto, isArray: true })
-  async companiesAdheredLastMonth(): Promise<CompanyDto[]> {
-    const companiesModel = await this.getCompaniesSuscribedLastMonth.execute();
+  async companiesAdheredSince(
+    @Query('joinedSince') joinedSince: Date,
+  ): Promise<CompanyDto[]> {
+    console.log(typeof joinedSince, 'date');
+
+    const companiesModel = await this.getCompaniesSuscribedSince.execute(
+      new Date(joinedSince),
+    );
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }
 

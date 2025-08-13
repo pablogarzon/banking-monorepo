@@ -5,15 +5,13 @@ import {
 } from 'src/domain/ports/company-persistence.port';
 
 @Injectable()
-export class GetCompaniesSuscribedLastMonthUC {
+export class GetCompaniesSuscribedSinceUC {
   constructor(
     @Inject(COMPANY_PERSISTENCE_PORT)
     private readonly companyRepository: CompanyPersistencePort,
   ) {}
 
-  async execute() {
-    const dateSince = new Date();
-    dateSince.setMonth(dateSince.getMonth() - 1);
+  async execute(dateSince: Date) {
     return this.companyRepository.findAdheredSince(dateSince);
   }
 }

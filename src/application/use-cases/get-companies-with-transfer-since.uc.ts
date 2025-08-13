@@ -10,7 +10,7 @@ import {
 } from 'src/domain/ports/transfer-persistence.port';
 
 @Injectable()
-export class GetCompaniesWithTransferLastMonthUC {
+export class GetCompaniesWithTransferSinceUC {
   constructor(
     @Inject(COMPANY_PERSISTENCE_PORT)
     private readonly companyRepository: CompanyPersistencePort,
@@ -18,10 +18,7 @@ export class GetCompaniesWithTransferLastMonthUC {
     private readonly transferRepository: TransferPersistencePort,
   ) {}
 
-  async execute() {
-    const dateSince = new Date();
-    dateSince.setMonth(dateSince.getMonth() - 1);
-
+  async execute(dateSince: Date) {
     const transfers =
       await this.transferRepository.findTransfersSince(dateSince);
     const cuits = Array.from(new Set(transfers.map((t) => t.empresaCuit)));
