@@ -38,8 +38,6 @@ export class CompanyController {
   async companiesAdheredSince(
     @Query('joinedSince') joinedSince: Date,
   ): Promise<CompanyDto[]> {
-    console.log(typeof joinedSince, 'date');
-
     const companiesModel = await this.getCompaniesSuscribedSince.execute(
       new Date(joinedSince),
     );
