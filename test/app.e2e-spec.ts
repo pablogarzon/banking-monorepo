@@ -21,7 +21,7 @@ describe('AppController (e2e)', () => {
       imports: [
         TypeOrmModule.forRoot({
           type: 'sqlite',
-          database: 'test.sqlite',
+          database: ':memory:',
           dropSchema: true, // Limpia el schema al inicio
           entities: [CompanyEntity, TransferEntity],
           synchronize: true, // Crea tablas automáticamente
@@ -120,6 +120,6 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    if (app) await app.close();
   });
 });
