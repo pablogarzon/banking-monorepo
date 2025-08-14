@@ -8,7 +8,7 @@ import { join } from 'path';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [
-        join(process.cwd(), `${process.env.NODE_ENV || 'development'}.env`),
+        join(process.cwd(), `.env.${process.env.NODE_ENV || 'development'}`),
       ],
     }),
     CompanyModule,
