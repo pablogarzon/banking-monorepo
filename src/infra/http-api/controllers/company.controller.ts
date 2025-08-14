@@ -15,7 +15,7 @@ export class CompanyController {
     private readonly registerNewCompany: RegisterNewCompanyUC,
   ) {}
 
-  @Get('transferencias')
+  @Get('transfers')
   @ApiOperation({
     summary:
       'Obtener las empresas que realizaron transferencias desde una fecha dada',
@@ -25,7 +25,7 @@ export class CompanyController {
     @Query('since') since: Date,
   ): Promise<CompanyDto[]> {
     const companiesModel = await this.getCompaniesWithTransferSince.execute(
-      new Date(since),
+      new Date(new Date(since).setHours(0, 0, 0, 0)),
     );
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }
@@ -39,7 +39,7 @@ export class CompanyController {
     @Query('joinedSince') joinedSince: Date,
   ): Promise<CompanyDto[]> {
     const companiesModel = await this.getCompaniesSuscribedSince.execute(
-      new Date(joinedSince),
+      new Date(new Date(joinedSince).setHours(0, 0, 0, 0)),
     );
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }

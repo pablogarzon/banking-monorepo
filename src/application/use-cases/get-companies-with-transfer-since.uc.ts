@@ -18,7 +18,7 @@ export class GetCompaniesWithTransferSinceUC {
     private readonly transferRepository: TransferPersistencePort,
   ) {}
 
-  async execute(dateSince: Date) {
+  async execute(dateSince: Date): Promise<Company[]> {
     const transfers =
       await this.transferRepository.findTransfersSince(dateSince);
     const cuits = Array.from(new Set(transfers.map((t) => t.empresaCuit)));

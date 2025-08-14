@@ -14,7 +14,7 @@ export class CompanyPersistenceAdapter implements CompanyPersistencePort {
 
   async save(company: Company): Promise<void> {
     const companyEntity = Object.assign(new CompanyEntity(), company);
-    this.companyRepo.save(companyEntity);
+    await this.companyRepo.save(companyEntity);
   }
 
   async findByCuit(cuit: string): Promise<Company | null> {

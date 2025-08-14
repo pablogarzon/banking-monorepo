@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { Transfer } from 'src/domain/entities/transfer';
 
 @Injectable()
-export class TransferPersitenceAdapter implements TransferPersistencePort {
+export class TransferPersistenceAdapter implements TransferPersistencePort {
   constructor(
     @InjectRepository(TransferEntity)
     private readonly transferRepo: Repository<TransferEntity>,
