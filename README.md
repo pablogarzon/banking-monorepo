@@ -5,25 +5,96 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  <p align="center">Bank API</p>
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Obtener las empresas que realizaron transferencias en el último mes.
+2. Obtener las empresas que se adhirieron en el último mes.
+3. Registrar la adhesión de una nueva empresa.
+   Estas empresas pueden ser de dos tipos:
+   - Empresa Pyme.
+   - Empresa Corporativa.
+
+### Consideraciones:
+
+La consigna especifica crear la lógica para el último mes, así que se pensó en dejar los endpoints de manera funcional con la consigna:
+
+```
+GET  company/transferencias/ultimo-mes
+GET  company/adhesiones-ultimo-mes
+POST company/
+```
+
+Pero en REST, lo ideal es que la URL represente el recurso y los filtros, fechas u operaciones se indiquen por query params. Además, crear la lógica para un solo mes implica que si mañana se necesita "últimos 3 meses" se debe crear otro caso de uso, codigo, endpoint, etc. Por lo que se decidió que sería mejor usar un query param poder ajustar la fecha de consulta sin cambiar el endpoint.
+
+### Stack
+
+- Nestjs
+- Fastify
+- Typeorm
+- Sqlite (para entorno de desarrollo)
+- Postgresql (para entorno de producción)
+
+### Estructura del proyecto
+
+El proyecto esta diseñado en base a la arquitectura hexagonal
+
+```
+src/
+│
+├── domain/                    # Lógica de negocio
+│   ├── entities/              # Entidades del dominio
+│   ├── ports/                 # Interfaces de puertos (repositorios)
+│
+├── application/               # Casos de uso / servicios de aplicación
+│   ├── use-cases/             # Casos de uso
+│   ├── commands/              # acciones manejadas por los CU
+│
+├── infra/                     # Implementaciones técnicas
+│   ├── db/                    # Configuración DB
+│   │   ├── adapters/          # adaptadores de los puertos de dominio
+│   │   ├── entities/          # Entitades a ser guardadas en la BD
+│   │   ├── providers/         # Módulos Nest para exportar cliente DB
+│   ├── http-api/              # Web API
+│       └── controllers/       # Controladores Nest
+│       └── dtos/              # dtos
+│
+└── main.ts                    # Punto de entrada NestJS
+```
+
+## Settings
+
+El proyecto se configura con archivos `.env`, uno para desarrollo y otro para producción. El archivo de desarrollo `.env.development` se encuentra versionado, pero el de producción debe ser creado en el directorio raíz con el nombre de `.env.production` con las siguientes configuraciones de ejemplo:
+
+```env
+# .env.production
+
+
+APP_PORT=3000
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=myuser
+DB_PASSWORD=mypassword
+DB_NAME=mydatabase
+```
+
+SQLite se usa para desarrollo local y para tests (e2e y unitarios):
+
+- Es ligero y no requiere instalar un servidor externo.
+
+- Arranca rápido y evita la sobrecarga de configurar credenciales o contenedores de Postgres.
+
+PostgreSQL se usa en producción:
+
+- Es un motor más robusto, escalable y seguro para entornos reales.
+
+- Maneja concurrencia, integridad y grandes volúmenes de datos mejor que SQLite.
+
+- Ofrece más funcionalidades avanzadas.
+
+**El proyecto usa un módulo proveedor de base de datos (DatabaseProviderModule) que decide qué configuración cargar según el NODE_ENV.**
 
 ## Project setup
 
@@ -57,42 +128,11 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Deployment
+## API Docs
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+El proyecto esta documentado con Swagger, para acceder a la documentación se debe ingresar a:
+`http://[server]:[port]/api`. Si no se a modificado la configuración por defecto se puede ingresar directamente a [http://localhost:3000/api](http://localhost:3000/api)
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Author - [Pablo Garzón](https://gitlab.com/pablogarzon)
