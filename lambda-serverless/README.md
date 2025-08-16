@@ -17,9 +17,27 @@ This template demonstrates how to develop and deploy a simple Node Express API s
 
 This template configures a single function, `api`, which is responsible for handling all incoming requests using the `httpApi` event. To learn more about `httpApi` event configuration options, please refer to [httpApi event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/). As the event is configured in a way to accept all incoming requests, the Express.js framework is responsible for routing and handling requests internally. This implementation uses the `serverless-http` package to transform the incoming event request payloads to payloads compatible with Express.js. To learn more about `serverless-http`, please refer to the [serverless-http README](https://github.com/dougmoscrop/serverless-http).
 
-Additionally, it also handles provisioning of a DynamoDB database that is used for storing data about users. The Express.js application exposes two endpoints, `POST /users` and `GET /user/:userId`, which create and retrieve a user record.
-
 ## Usage
+
+## Local
+
+```
+npm install
+
+npm run sls:dev
+```
+
+### Invocation
+
+```
+curl --location --request POST 'http://localhost:3000/company' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "cuit": "11-111111-1",
+    "razonSocial": "razon-social",
+    "tipo": "corporativa"
+}'
+```
 
 ### Deployment
 
@@ -48,43 +66,3 @@ functions:
 ```
 
 _Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [`httpApi` event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/). Additionally, in current configuration, the DynamoDB table will be removed when running `serverless remove`. To retain the DynamoDB table even after removal of the stack, add `DeletionPolicy: Retain` to its resource definition.
-
-### Invocation
-
-After successful deployment, you can create a new user by calling the corresponding endpoint:
-
-```
-curl --request POST 'https://xxxxxx.execute-api.us-east-1.amazonaws.com/users' --header 'Content-Type: application/json' --data-raw '{"name": "John", "userId": "someUserId"}'
-```
-
-Which should result in the following response:
-
-```json
-{ "userId": "someUserId", "name": "John" }
-```
-
-You can later retrieve the user by `userId` by calling the following endpoint:
-
-```
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/users/someUserId
-```
-
-Which should result in the following response:
-
-```json
-{ "userId": "someUserId", "name": "John" }
-```
-
-### Local development
-
-The easiest way to develop and test your function is to use the `dev` command:
-
-```
-serverless dev
-```
-
-This will start a local emulator of AWS Lambda and tunnel your requests to and from AWS Lambda, allowing you to interact with your function as if it were running in the cloud.
-
-Now you can invoke the function as before, but this time the function will be executed locally. Now you can develop your function locally, invoke it, and see the results immediately without having to re-deploy.
-
-When you are done developing, don't forget to run `serverless deploy` to deploy the function to the cloud.

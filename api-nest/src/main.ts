@@ -34,7 +34,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const { APP_PORT } = getEnvConfig(configService);
 
-  await app.listen(APP_PORT ?? 3000, '0.0.0.0');
+  await app.listen(APP_PORT ?? 3005, '0.0.0.0');
   console.log(`This application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

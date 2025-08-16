@@ -13,7 +13,9 @@
     "build:api": "npm run build --workspace api-nest",
     "test:api": "npm run test --workspace api-nest",
     "test:core": "npm run test --workspace core",
-    "test:cov:core": "npm run test:cov --workspace core"
+    "test:cov:core": "npm run test:cov --workspace core",
+    "lambda": "npm run sls:dev --workspace lambda-serverless",
+    "api": "npm run start --workspace api-nest"
   },
   "author": "Pablo Garzón",
   "license": "ISC"

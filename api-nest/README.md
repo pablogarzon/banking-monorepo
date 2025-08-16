@@ -65,13 +65,13 @@ src/
 
 ## Settings
 
-El proyecto se configura con archivos `.env`, uno para desarrollo y otro para producción. El archivo de desarrollo `.env.development` se encuentra versionado, pero el de producción debe ser creado en el directorio raíz con el nombre de `.env.production` con las siguientes configuraciones de ejemplo:
+El proyecto se configura con archivos `.env`, pero para probarlo localmente en desarrollo no es necesario. El archivo de producción debe ser creado en el directorio raíz con el nombre de `.env.production` con las siguientes configuraciones de ejemplo:
 
 ```env
 # .env.production
 
 
-APP_PORT=3000
+APP_PORT=3005
 
 DB_HOST=localhost
 DB_PORT=5432
@@ -94,7 +94,13 @@ PostgreSQL se usa en producción:
 
 - Ofrece más funcionalidades avanzadas.
 
-**El proyecto usa un módulo proveedor de base de datos (DatabaseProviderModule) que decide qué configuración cargar según el NODE_ENV.**
+**Esta versionada una base de datos de prueba con datos cargados, se debe renombrar a para probar**
+
+```
+$ mv database.sqlite.example database.sqlite
+```
+
+**_El proyecto usa un módulo proveedor de base de datos (DatabaseProviderModule) que decide qué configuración cargar según el NODE_ENV._**
 
 ## Project setup
 
@@ -131,7 +137,7 @@ $ npm run test:cov
 ## API Docs
 
 El proyecto esta documentado con Swagger, para acceder a la documentación se debe ingresar a:
-`http://[server]:[port]/api`. Si no se a modificado la configuración por defecto se puede ingresar directamente a [http://localhost:3000/api](http://localhost:3000/api)
+`http://[server]:[port]/api`. Si no se a modificado la configuración por defecto se puede ingresar directamente a [http://localhost:3005/api](http://localhost:3005/api)
 
 ## Stay in touch
 
