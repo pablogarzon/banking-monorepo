@@ -1,0 +1,55 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: erstack
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: lambda-serverless
+
+stages:
+  default:
+    params:
+      tableName: 'companies-table-${sls:stage}'
+
+plugins:
+  - 'serverless-offline'
+
+#que hace este bloque en el archivo serverless.yml?
+provider:
+  name: aws
+  runtime: nodejs20.x
+  # Uncomment to easily set up a custom domain. Read the docs for more details:
+  # https://www.serverless.com/framework/docs/providers/aws/guide/domains
+  # domain: api.example.com
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [CompaniesTable, Arn]
+  environment:
+    COMPANIES_TABLE: ${param:tableName}
+
+functions:
+  api:
+    handler: ./src/infra/handler.handler
+    events:
+      - httpApi: '*'
+
+resources:
+  Resources:
+    CompaniesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: cuit
+            AttributeType: S
+        KeySchema:
+          - AttributeName: cuit
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${param:tableName}
