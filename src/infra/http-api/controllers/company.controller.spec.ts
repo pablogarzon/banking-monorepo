@@ -10,7 +10,7 @@ describe('CompanyController', () => {
   let controller: CompanyController;
 
   const testCompany = new Company('12-3456789-0', 'test', new Date(), 'pyme');
-  const mockRegisterNewCompany = { execute: jest.fn((dto) => {}) };
+  const mockRegisterNewCompany = { execute: jest.fn((_) => {}) };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,9 +22,9 @@ describe('CompanyController', () => {
       ],
     })
       .overrideProvider(GetCompaniesSuscribedSinceUC)
-      .useValue({ execute: jest.fn((since) => [testCompany]) })
+      .useValue({ execute: jest.fn((_) => [testCompany]) })
       .overrideProvider(GetCompaniesWithTransferSinceUC)
-      .useValue({ execute: jest.fn((since) => [testCompany]) })
+      .useValue({ execute: jest.fn((_) => [testCompany]) })
       .overrideProvider(RegisterNewCompanyUC)
       .useValue(mockRegisterNewCompany)
       .compile();
@@ -41,7 +41,7 @@ describe('CompanyController', () => {
     ).toHaveLength(1);
   });
   test('should add a new company', async () => {
-    await controller.register(new CreateCompanyDto())
+    await controller.register(new CreateCompanyDto());
     expect(mockRegisterNewCompany.execute).toHaveBeenCalled();
   });
 });

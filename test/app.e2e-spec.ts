@@ -12,6 +12,7 @@ import { TransferPersistenceAdapter } from 'src/infra/db/adapters/transfer-persi
 import { COMPANY_PERSISTENCE_PORT } from 'src/domain/ports/company-persistence.port';
 import { TRANSFER_PERSISTENCE_PORT } from 'src/domain/ports/transfer-persistence.port';
 import { CompanyController } from 'src/infra/http-api/controllers/company.controller';
+import { formatDate } from 'src/common/utils/date.util';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -50,7 +51,7 @@ describe('AppController (e2e)', () => {
 
   it('/ (GET) get companies added since given date', () => {
     return request(app.getHttpServer())
-      .get(`/company?joinedSince=${new Date().toISOString().slice(0, 10)}`)
+      .get(`/company?joinedSince=${formatDate(new Date())}`)
       .expect(200)
       .expect([]);
   });
@@ -69,7 +70,7 @@ describe('AppController (e2e)', () => {
       .expect(201);
 
     const res = await request(app.getHttpServer())
-      .get(`/company?joinedSince=${new Date().toISOString().slice(0, 10)}`)
+      .get(`/company?joinedSince=${formatDate(new Date())}`)
       .expect(200);
 
     expect(Array.isArray(res.body)).toBeTruthy();
@@ -111,7 +112,7 @@ describe('AppController (e2e)', () => {
     });
 
     const res = await request(app.getHttpServer())
-      .get(`/company/transfers?since=${new Date().toISOString().slice(0, 10)}`)
+      .get(`/company/transfers?since=${formatDate(new Date())}`)
       .expect(200);
 
     expect(res.body).toHaveLength(2);

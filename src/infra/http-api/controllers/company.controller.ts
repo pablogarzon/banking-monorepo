@@ -5,7 +5,9 @@ import { GetCompaniesSuscribedSinceUC } from 'src/application/use-cases/get-comp
 import { RegisterNewCompanyUC } from 'src/application/use-cases/register-new-company.uc';
 import { CreateCompanyCommand } from 'src/application/commands/create-company.command';
 import { CompanyDto } from '../dtos/company.dto';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { formatDate, getStartOfDay } from 'src/common/utils/date.util';
+import { DATE_FORMAT } from 'src/common/constants';
 
 @Controller('company')
 export class CompanyController {
@@ -20,12 +22,18 @@ export class CompanyController {
     summary:
       'Obtener las empresas que realizaron transferencias desde una fecha dada',
   })
+  @ApiQuery({
+    name: 'since',
+    required: true,
+    description: `Fecha desde (${DATE_FORMAT})`,
+    example: formatDate(new Date()),
+  })
   @ApiOkResponse({ type: CompanyDto, isArray: true })
   async companiesWithTransfersSince(
     @Query('since') since: Date,
   ): Promise<CompanyDto[]> {
     const companiesModel = await this.getCompaniesWithTransferSince.execute(
-      new Date(new Date(since).setHours(0, 0, 0, 0)),
+      getStartOfDay(since),
     );
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }
@@ -34,12 +42,18 @@ export class CompanyController {
   @ApiOperation({
     summary: 'Obtener las empresas que se adhirieron desde una fecha dada',
   })
+  @ApiQuery({
+    name: 'joinedSince',
+    required: true,
+    description: `Fecha de adhesión (${DATE_FORMAT})`,
+    example: formatDate(new Date()),
+  })
   @ApiOkResponse({ type: CompanyDto, isArray: true })
   async companiesAdheredSince(
     @Query('joinedSince') joinedSince: Date,
   ): Promise<CompanyDto[]> {
     const companiesModel = await this.getCompaniesSuscribedSince.execute(
-      new Date(new Date(joinedSince).setHours(0, 0, 0, 0)),
+      getStartOfDay(joinedSince),
     );
     return companiesModel.map((c) => Object.assign(new CompanyDto(), c));
   }
