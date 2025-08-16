@@ -1,7 +1,13 @@
 # compiled output
 /dist
+/core/dist
+/api-nest/dist
 /node_modules
+/core/node_modules
+/api-nest/node_modules
 /build
+/core/build
+/api-nest/build
 
 # Logs
 logs
@@ -18,6 +24,10 @@ lerna-debug.log*
 # Tests
 /coverage
 /.nyc_output
+/core/coverage
+/core/.nyc_output
+/nest-api/coverage
+/nest-api/.nyc_output
 
 # IDEs and editors
 /.idea

@@ -1,0 +1,15 @@
+{
+  "name": "@bank-monorepo/core",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^30.0.5"
+  }
+}
