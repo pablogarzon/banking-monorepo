@@ -9,7 +9,6 @@
 /build
 /core/build
 /api-nest/build
-/lambda-example
 
 # Logs
 logs
@@ -68,7 +67,9 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# Sqlite
+# databases
 *.sqlite
+*lambdadb.json
 
 .serverless
+

@@ -6,8 +6,12 @@ const {
   PutCommand,
 } = require('@aws-sdk/lib-dynamodb');*/
 
+import { getDbRepository } from './db/providers/database.provider';
+
 const express = require('express');
 const serverless = require('serverless-http');
+const validateData = require('./http-api/validation.middleware');
+const { CreateCompanySchema } = require('./http-api/create-company.shcema');
 
 const app = express();
 
@@ -17,6 +21,9 @@ const client = new DynamoDBClient();
 const docClient = DynamoDBDocumentClient.from(client);
 */
 app.use(express.json());
+app.use(validateData);
+
+const companyRepository = getDbRepository();
 
 app.get('/users/:userId', async (req, res) => {
   /*const params = {
@@ -45,34 +52,15 @@ app.get('/users/:userId', async (req, res) => {
   res.json({ saludo: 'hello' });
 });
 
-/*
-app.post('/users', async (req, res) => {
-  const { userId, name } = req.body;
-  if (typeof userId !== 'string') {
-    res.status(400).json({ error: '"userId" must be a string' });
-  } else if (typeof name !== 'string') {
-    res.status(400).json({ error: '"name" must be a string' });
-  }
-
-  const params = {
-    TableName: USERS_TABLE,
-    Item: { userId, name },
-  };
-
-  try {
-    const command = new PutCommand(params);
-    await docClient.send(command);
-    res.json({ userId, name });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Could not create user' });
-  }
+app.post('/company', async (req, res) => {
+  companyRepository.save(req.body);
+  res.status(201).json({ saludo: 'hello' });
 });
 
 app.use((req, res, next) => {
   return res.status(404).json({
     error: 'Not Found',
   });
-});*/
+});
 
 exports.handler = serverless(app);

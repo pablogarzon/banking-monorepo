@@ -11,7 +11,6 @@
   "scripts": {
     "build:core": "npm run build --workspace core",
     "build:api": "npm run build --workspace api-nest",
-    "build:lambda": "npm run build --workspace lambda-serverless",
     "test:api": "npm run test --workspace api-nest",
     "test:core": "npm run test --workspace core",
     "test:cov:core": "npm run test:cov --workspace core"
