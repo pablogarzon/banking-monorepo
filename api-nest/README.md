@@ -94,7 +94,7 @@ PostgreSQL se usa en producción:
 
 - Ofrece más funcionalidades avanzadas.
 
-**Esta versionada una base de datos de prueba con datos cargados, se debe renombrar a para probar**
+**Esta versionada una base de datos de prueba con datos cargados, se debe renombrar para probar**
 
 ```
 $ mv database.sqlite.example database.sqlite
@@ -138,7 +138,3 @@ $ npm run test:cov
 
 El proyecto esta documentado con Swagger, para acceder a la documentación se debe ingresar a:
 `http://[server]:[port]/api`. Si no se a modificado la configuración por defecto se puede ingresar directamente a [http://localhost:3005/api](http://localhost:3005/api)
-
-## Stay in touch
-
-- Author - [Pablo Garzón](https://gitlab.com/pablogarzon)

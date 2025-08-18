@@ -87,7 +87,3 @@ La documentación expandida de la función lambda puede encontrarse [aquí](./la
 ```
 
 **_tanto la api como la función lambda tienen más scripts, conviene revisar cada package.json_**
-
-## Stay in touch
-
-- Author - [Pablo Garzón](https://gitlab.com/pablogarzon)
