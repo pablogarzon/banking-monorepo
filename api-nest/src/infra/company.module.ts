@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { CompanyController } from './http-api/controllers/company.controller';
 import {
-  COMPANY_PERSISTENCE_PORT,
   GetCompaniesSuscribedSinceUC,
   GetCompaniesWithTransferSinceUC,
   RegisterNewCompanyUC,
-  TRANSFER_PERSISTENCE_PORT,
 } from '@bank-monorepo/core';
 import { CompanyPersistenceAdapter } from './db/adapters/company-persistence.adapter';
 import { TransferPersistenceAdapter } from './db/adapters/transfer-persistence.adapter';
 import { DatabaseProviderModule } from './db/providers/database.provider';
+
+const COMPANY_PERSISTENCE_PORT = Symbol('COMPANY_PERSISTENCE_PORT');
+const TRANSFER_PERSISTENCE_PORT = Symbol('TRANSFER_PERSISTENCE_PORT');
 
 @Module({
   imports: [DatabaseProviderModule],
