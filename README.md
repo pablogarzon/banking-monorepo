@@ -3,7 +3,7 @@
     <a href="https://www.serverless.com/" target="blank"><img src="https://github.com/serverless/artwork/blob/master/icon-serverless.png?raw=true" width="120" alt="Nest Logo" /></a>
 </p>
 
-  <p align="center">Bank Monorepo</p>
+  <p align="center">Banking Monorepo</p>
 
 ## Description
 
