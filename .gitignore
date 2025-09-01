@@ -27,8 +27,8 @@ lerna-debug.log*
 /.nyc_output
 /core/coverage
 /core/.nyc_output
-/nest-api/coverage
-/nest-api/.nyc_output
+/api-nest/coverage
+/api-nest/.nyc_output
 
 # IDEs and editors
 /.idea

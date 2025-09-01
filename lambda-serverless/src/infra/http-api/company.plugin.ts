@@ -1,4 +1,4 @@
-import { RegisterNewCompanyUC } from '@bank-monorepo/core';
+import { RegisterNewCompanyUC } from '@banking-monorepo/core';
 import { FastifyPluginAsync } from 'fastify';
 import { getDbRepository } from '../db/providers/database.provider';
 

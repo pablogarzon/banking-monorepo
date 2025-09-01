@@ -1,5 +1,5 @@
 import { PutCommand } from '@aws-sdk/lib-dynamodb';
-import { Company, CompanyPersistencePort } from '@bank-monorepo/core';
+import { Company, CompanyPersistencePort } from '@banking-monorepo/core';
 import { docClient } from '../clients/dynamodb.client';
 
 const TABLE_NAME = 'CompaniesTable';

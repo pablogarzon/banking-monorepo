@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CompanyPersistenceAdapter } from './company-persistence.adapter';
 import { CompanyEntity } from '../entities/company.entity';
-import { Company } from '@bank-monorepo/core';
+import { Company } from '@banking-monorepo/core';
 
 describe('CompanyPersistenceAdapter', () => {
   let adapter: CompanyPersistenceAdapter;

@@ -5,7 +5,7 @@ import {
   GetCompaniesSuscribedSinceUC,
   GetCompaniesWithTransferSinceUC,
   RegisterNewCompanyUC,
-} from '@bank-monorepo/core';
+} from '@banking-monorepo/core';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 
 describe('CompanyController', () => {

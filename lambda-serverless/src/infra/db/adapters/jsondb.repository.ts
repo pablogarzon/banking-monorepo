@@ -1,4 +1,4 @@
-import { Company, CompanyPersistencePort } from '@bank-monorepo/core';
+import { Company, CompanyPersistencePort } from '@banking-monorepo/core';
 import { jsondbClient } from '../clients/jsondb.client';
 
 export class JsondbRepository implements CompanyPersistencePort {

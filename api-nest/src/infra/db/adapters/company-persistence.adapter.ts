@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Company, CompanyPersistencePort } from '@bank-monorepo/core';
+import { Company, CompanyPersistencePort } from '@banking-monorepo/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CompanyEntity } from '../entities/company.entity';

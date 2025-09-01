@@ -7,7 +7,7 @@ import {
   GetCompaniesWithTransferSinceUC,
   getStartOfDay,
   RegisterNewCompanyUC,
-} from '@bank-monorepo/core';
+} from '@banking-monorepo/core';
 import { CompanyDto } from '../dtos/company.dto';
 import { ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
 

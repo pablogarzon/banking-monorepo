@@ -6,7 +6,7 @@ import { CompanyEntity } from 'src/infra/db/entities/company.entity';
 import { TransferEntity } from 'src/infra/db/entities/transfer.entity';
 import { CompanyModule } from 'src/infra/company.module';
 import { ConfigService } from '@nestjs/config';
-import { formatDate } from '@bank-monorepo/core';
+import { formatDate } from '@banking-monorepo/core';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

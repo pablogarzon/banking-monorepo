@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TransferPersistencePort } from '@bank-monorepo/core';
+import { TransferPersistencePort } from '@banking-monorepo/core';
 import { TransferEntity } from '../entities/transfer.entity';
 import { Repository } from 'typeorm';
-import { Transfer } from '@bank-monorepo/core';
+import { Transfer } from '@banking-monorepo/core';
 
 @Injectable()
 export class TransferPersistenceAdapter implements TransferPersistencePort {

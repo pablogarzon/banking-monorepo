@@ -1,11 +1,12 @@
 {
-  "name": "@bank-monorepo/lambda-serverless",
+  "name": "@banking-monorepo/lambda-serverless",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "sls:dev": "sls offline --stage develop --region sa-east-1"
   },
   "dependencies": {
+    "@banking-monorepo/core": "*",
     "@aws-sdk/client-dynamodb": "^3.585.0",
     "@aws-sdk/lib-dynamodb": "^3.585.0",
     "express": "^4.19.2",

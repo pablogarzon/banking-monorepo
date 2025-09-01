@@ -4,7 +4,7 @@ import {
   GetCompaniesSuscribedSinceUC,
   GetCompaniesWithTransferSinceUC,
   RegisterNewCompanyUC,
-} from '@bank-monorepo/core';
+} from '@banking-monorepo/core';
 import { CompanyPersistenceAdapter } from './db/adapters/company-persistence.adapter';
 import { TransferPersistenceAdapter } from './db/adapters/transfer-persistence.adapter';
 import { DatabaseProviderModule } from './db/providers/database.provider';

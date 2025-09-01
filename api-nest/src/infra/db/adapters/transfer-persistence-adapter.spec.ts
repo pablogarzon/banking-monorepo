@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { TransferPersistenceAdapter } from './transfer-persistence.adapter';
 import { TransferEntity } from '../entities/transfer.entity';
-import { Transfer } from '@bank-monorepo/core';
+import { Transfer } from '@banking-monorepo/core';
 
 describe('TransferPersitenceAdapter', () => {
   let adapter: TransferPersistenceAdapter;
